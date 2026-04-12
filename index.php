@@ -12,27 +12,58 @@ session_start();
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION['mensagem'])) {
-        include('mensagem.php');
-    }
-    ?>
-    <form class="container card" action="tratamento.php" method="post">
+  
+    <form class="container card">
         <div class="red">
 
-            <label for="textUsername">Username</label>
+            <label>Username</label>
             <input type="text" name="text_username">
 
-            <label for="textPass">Password</label>
+            <label>Password</label>
             <input type="text" name="text_pass">
 
-            <label for="textPass">Confirm password</label>
+            <label>Confirm password</label>
             <input type="text" name="text_pass_confirm">
 
-            <button type="submit"> Entrar</button>
+            <button type="button" onclick="onEntrar()"> Entrar</button>
+
         </div>
     </form>
 
+    <!-- 🔥 AGORA É MODULE -->
+    <script type="module">
+        import { mostrarMensagem } from './mensagem.js';
+
+        const onEntrar = () => {
+
+            const username = document.querySelector('[name="text_username"]').value;
+            const pass = document.querySelector('[name="text_pass"]').value;
+            const confirm = document.querySelector('[name="text_pass_confirm"]').value;
+
+            fetch('http://localhost/registroPHP/tratamento-api.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text_username: username,
+                    text_pass: pass,
+                    text_pass_confirm: confirm
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+
+                // 🔥 TROCA DO ALERT
+                mostrarMensagem(data.message);
+            })
+            .catch(err => console.log(err));
+        }
+
+        // 🔥 NECESSÁRIO PRA FUNCIONAR NO onclick
+        window.onEntrar = onEntrar;
+    </script>
 </body>
 
 </html>
