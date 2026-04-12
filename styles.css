@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container principal */
+.container {
+    width: 100%;
+    max-width: 350px;
+}
+
+/* Card */
+.card{
+    background-color: #1e293b;
+    padding: 25px;
+    border-radius: 10px;
+
+}
+
+/* Labels */
+label {
+    
+    display: block;
+    margin-bottom: 5px;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+
+
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    background-color: #334155;
+    color: white;
+}
+
+/* Efeito foco */
+input:focus {
+    background-color: #475569;
+}
+
+/* Botão */
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #3b82f6;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #2563eb;
+}
+
+
+.alert {
+    position: absolute;
+    padding: 15px 40px 15px 15px;
+    border: 1px solid #ffeeba;
+    background-color: #fff3cd;
+    color: #856404;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-family: Arial, sans-serif;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #856404;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+
+.alert-overlay {
+    position: fixed;
+    inset: 0;
+  
+}
+
+.alert-card {
+    background: white;
+    padding: 20px;
+    width: 250px;
+    margin: 20px auto;
+    text-align: center;
+    border-radius: 5px;
+}
