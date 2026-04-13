@@ -30,12 +30,10 @@ session_start();
         </div>
     </form>
 
-    <!-- 🔥 AGORA É MODULE -->
+
     <script type="module">
         import { mostrarMensagem } from './mensagem.js';
-
         const onEntrar = () => {
-
             const username = document.querySelector('[name="text_username"]').value;
             const pass = document.querySelector('[name="text_pass"]').value;
             const confirm = document.querySelector('[name="text_pass_confirm"]').value;
@@ -54,14 +52,10 @@ session_start();
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-
-                // 🔥 TROCA DO ALERT
                 mostrarMensagem(data.message);
             })
             .catch(err => console.log(err));
         }
-
-        // 🔥 NECESSÁRIO PRA FUNCIONAR NO onclick
         window.onEntrar = onEntrar;
     </script>
 </body>
