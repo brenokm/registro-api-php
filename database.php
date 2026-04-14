@@ -9,7 +9,6 @@ use stdClass;
 
 class Database
 {
-    //propriedades
     private $_host;
     private $_database;
     private $_username;
@@ -19,12 +18,10 @@ class Database
 
     public function __construct($cfg_options, $return_type = 'object')
     {
-        // set connetction configurations
         $this->_host = $cfg_options['host'];
         $this->_database = $cfg_options['database'];
         $this->_username = $cfg_options['username'];
         $this->_password = $cfg_options['password'];
-        //set returnt type
         if (!empty($return_type) && $return_type == 'object') {
             $this->_return_type = PDO::FETCH_OBJ;
         } else {
@@ -33,13 +30,11 @@ class Database
     }
     public function execute_query($sql, $parameters = null)
     {
-        //executar query com resultados
-        //conexão
         $conection = new PDO(
             'mysql:host=' . $this->_host . ';dbname=' . $this->_database . ';charset=utf8',
             $this->_username,
             $this->_password,
-            array(PDO::ATTR_PERSISTENT => true) //caso a coneção caia, agiliza os processos de reconecção
+            array(PDO::ATTR_PERSISTENT => true)
         );
         try {
             $db = $conection->prepare($sql);
@@ -51,22 +46,15 @@ class Database
             }
             $results = $db->fetchAll($this->_return_type);
         } catch (PDOException $e) {
-            //fechar conexão
             $conection = null;
-            //retornar um erro
             return $this->_result('error', $e->getMessage(), $sql, null, 0, null);
         }
-        //try deu certo: fechar conexão
         $conection = null;
-        //retornar resultados
         return $this->_result('sucess', 'sucess', $sql, $results, $db->rowCount(), null);
     }
     public function execute_non_query($sql, $parameters = null)
     {  
-        //executar query sem resultados
 
-
-        //conexão
         $conection = new PDO(
             'mysql:host=' . $this->_host . ';dbname=' . $this->_database . ';charset=utf8' ,
             $this->_username,
@@ -74,9 +62,7 @@ class Database
                 array(PDO::ATTR_PERSISTENT => true) //caso a coneção caia, agiliza os processos de reconecção
         );
 
-        //iniciar transação
         $conection->beginTransaction();
-        //preparar e executar a query
         try {
             $db = $conection->prepare($sql);
             if (!empty($parameters)) {
@@ -88,18 +74,14 @@ class Database
 
             $conection->commit(); 
         } catch (PDOException $e) {
-            //desfazer todas as operações SQL em caso de erro
             $conection->rollBack();
 
-            //fechar conexão
             $conection = null;
-            //retornar um erro
             return $this->_result('error', $e->getMessage(), $sql, null, 0, null);
         }
 
 
         $conection = null;
-        //retornar resultados
         return $this->_result('sucess', 'sucess', $sql, null, $db->rowCount(), $last_inserted_id);
     }
     private function _result($status, $message, $sql, $results, $affected_rows, $last_id)
@@ -114,5 +96,3 @@ class Database
         return $tmp;
     }
 }
-
-

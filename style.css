@@ -53,7 +53,18 @@ input:focus {
 }
 
 /* Botão */
-button {
+button{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #3b82f6;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+a{
     width: 100%;
     padding: 10px;
     border: none;

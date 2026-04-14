@@ -8,11 +8,11 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href=".\\styles.css">
+    <link rel="stylesheet" href=".\style.css">
 </head>
 
 <body>
-  
+
     <form class="container card">
         <div class="red">
 
@@ -22,48 +22,41 @@ session_start();
             <label>Password</label>
             <input type="text" name="text_pass">
 
-            <label>Confirm password</label>
-            <input type="text" name="text_pass_confirm">
 
             <button type="button" onclick="onEntrar()"> Entrar</button>
+            <a href=".\registro.php" class="altern"> registrar</a>
 
         </div>
+
+        <script type="module">
+            import { mostrarMensagem } from './mensagem.js';
+            const onEntrar = () => {
+                const textUsername = document.querySelector('[name="text_username"]').value;
+                const textPass = document.querySelector('[name="text_pass"]').value;
+
+                fetch("http://localhost/registroPHP/tratamento-login.php", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            text_username: textUsername,
+                            text_pass: textPass
+                        }),
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+
+                        if (data.status === 'ok') {
+                            mostrarMensagem("Login realizado!");
+                        } else {
+                            mostrarMensagem(data.message);
+                        }
+                    })
+                    .catch(err => console.log(err));
+            }
+            window.onEntrar = onEntrar;
+        </script>
     </form>
-
-    <!-- 🔥 AGORA É MODULE -->
-    <script type="module">
-        import { mostrarMensagem } from './mensagem.js';
-
-        const onEntrar = () => {
-
-            const username = document.querySelector('[name="text_username"]').value;
-            const pass = document.querySelector('[name="text_pass"]').value;
-            const confirm = document.querySelector('[name="text_pass_confirm"]').value;
-
-            fetch('http://localhost/registroPHP/tratamento-api.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    text_username: username,
-                    text_pass: pass,
-                    text_pass_confirm: confirm
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-
-                // 🔥 TROCA DO ALERT
-                mostrarMensagem(data.message);
-            })
-            .catch(err => console.log(err));
-        }
-
-        // 🔥 NECESSÁRIO PRA FUNCIONAR NO onclick
-        window.onEntrar = onEntrar;
-    </script>
 </body>
-
-</html>
